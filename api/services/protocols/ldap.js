@@ -10,6 +10,10 @@ var commonName = /^cn=([^,]+),.*/;
 
 var ldapToUser = function (ldapUser, user, next) {
     var data = _.clone(user || {});
+    data.admin =
+        data.admin ||
+        _.findIndex(ldapUser._groups, group_test) > -1 ||
+        _.findIndex(ldapUser.memberOf, member_test) > -1;
     data.active = true;
 
     // copy attributes from the ldap user to the konga user using the ldapAttrMap
@@ -50,6 +54,7 @@ var member_test = function (group) {
 
 var setAdminStatus = function (ldapUser, user, next) {
     user.admin =
+        user.admin ||
         _.findIndex(ldapUser._groups, group_test) > -1 ||
         _.findIndex(ldapUser.memberOf, member_test) > -1;
     next(null, user);
