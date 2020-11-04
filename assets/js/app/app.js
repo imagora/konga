@@ -44,7 +44,7 @@
       $logProvider.debugEnabled(window.enableLogs);
     })
 
-    .value('HttpTimeout', 20000)
+    .value('HttpTimeout', 120000)
 
     // Provider to disable UI routers template caching
     .config(['$provide', function ($provide) {
